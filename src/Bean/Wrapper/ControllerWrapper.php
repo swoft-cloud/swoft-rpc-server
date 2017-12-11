@@ -2,21 +2,33 @@
 
 namespace Swoft\Bean\Wrapper;
 
-use Swoft\Bean\Annotation\AutoController;
+use Swoft\Bean\Annotation\Controller;
+use Swoft\Bean\Annotation\Enum;
+use Swoft\Bean\Annotation\EnumFloat;
+use Swoft\Bean\Annotation\EnumInteger;
+use Swoft\Bean\Annotation\EnumNumber;
+use Swoft\Bean\Annotation\EnumString;
+use Swoft\Bean\Annotation\Floats;
 use Swoft\Bean\Annotation\Inject;
+use Swoft\Bean\Annotation\Integer;
+use Swoft\Bean\Annotation\Middleware;
+use Swoft\Bean\Annotation\Middlewares;
+use Swoft\Bean\Annotation\Number;
 use Swoft\Bean\Annotation\RequestMapping;
+use Swoft\Bean\Annotation\Strings;
+use Swoft\Bean\Annotation\Value;
 use Swoft\Bean\Annotation\View;
 
 /**
  * 路由注解封装器
  *
- * @uses      AutoControllerWrapper
+ * @uses      ControllerWrapper
  * @version   2017年09月04日
  * @author    stelin <phpcrazy@126.com>
  * @copyright Copyright 2010-2016 swoft software
  * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
-class AutoControllerWrapper extends AbstractWrapper
+class ControllerWrapper extends AbstractWrapper
 {
     /**
      * 类注解
@@ -25,7 +37,9 @@ class AutoControllerWrapper extends AbstractWrapper
      */
     protected $classAnnotations
         = [
-            AutoController::class
+            Controller::class,
+            Middlewares::class,
+            Middleware::class,
         ];
 
     /**
@@ -35,7 +49,8 @@ class AutoControllerWrapper extends AbstractWrapper
      */
     protected $propertyAnnotations
         = [
-            Inject::class
+            Inject::class,
+            Value::class,
         ];
 
     /**
@@ -47,6 +62,13 @@ class AutoControllerWrapper extends AbstractWrapper
         = [
             RequestMapping::class,
             View::class,
+            Middlewares::class,
+            Middleware::class,
+            Strings::class,
+            Floats::class,
+            Number::class,
+            Integer::class,
+            Enum::class
         ];
 
     /**
@@ -58,7 +80,7 @@ class AutoControllerWrapper extends AbstractWrapper
      */
     public function isParseClassAnnotations(array $annotations)
     {
-        return isset($annotations[AutoController::class]);
+        return isset($annotations[Controller::class]);
     }
 
     /**
@@ -70,7 +92,7 @@ class AutoControllerWrapper extends AbstractWrapper
      */
     public function isParsePropertyAnnotations(array $annotations)
     {
-        return isset($annotations[Inject::class]);
+        return isset($annotations[Inject::class]) || isset($annotations[Value::class]);
     }
 
     /**
@@ -82,6 +104,6 @@ class AutoControllerWrapper extends AbstractWrapper
      */
     public function isParseMethodAnnotations(array $annotations)
     {
-        return isset($annotations[RequestMapping::class]);
+        return true;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Bean;
+namespace Swoft\Rpc\Server\Bean;
 
 /**
  * 注解数据收集器

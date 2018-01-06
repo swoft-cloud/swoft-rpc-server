@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Service;
+namespace Swoft\Rpc\Server\Service;
 
 /**
  * the interface of packer

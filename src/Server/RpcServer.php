@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Server;
+namespace Swoft\Rpc\Server\Server;
 
 use Swoft\App;
 use Swoft\Core\ApplicationContext;

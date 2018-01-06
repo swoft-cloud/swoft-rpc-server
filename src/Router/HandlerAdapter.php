@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Router\Service;
+namespace Swoft\Rpc\Server\Router\Service;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;

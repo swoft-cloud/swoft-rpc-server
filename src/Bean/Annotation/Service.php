@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Bean\Annotation;
+namespace Swoft\Rpc\Server\Bean\Annotation;
 
 /**
  * RPC注解

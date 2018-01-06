@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Console\Command;
+namespace Swoft\Rpc\Server\Console\Command;
 
 use Swoft\Console\ConsoleCommand;
 use Swoft\Console\Input\Input;

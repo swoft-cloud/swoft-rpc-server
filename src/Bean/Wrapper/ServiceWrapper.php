@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Bean\Wrapper;
+namespace Swoft\Rpc\Server\Bean\Wrapper;
 
 use Swoft\Bean\Annotation\Enum;
 use Swoft\Bean\Annotation\Floats;

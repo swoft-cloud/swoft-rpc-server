@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Router\Service;
+namespace Swoft\Rpc\Server\Router\Service;
 
 use Swoft\Router\HandlerMappingInterface;
 

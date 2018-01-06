@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Bean\Parser;
+namespace Swoft\Rpc\Server\Bean\Parser;
 
 use Swoft\Bean\Annotation\Scope;
 use Swoft\Bean\Annotation\Service;

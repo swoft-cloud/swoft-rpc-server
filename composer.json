@@ -19,12 +19,12 @@
     "classmap": [
     ],
     "psr-4": {
-      "Swoft\\Rpc\\":"src/"
+      "Swoft\\Rpc\\Server\\":"src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Swoft\\RPC\\Test\\": "test/TestCases"
+      "Swoft\\Rpc\\Server\\\\Test\\": "test/TestCases"
     }
   },
   "repositories": {

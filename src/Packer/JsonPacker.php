@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Service;
+namespace Swoft\Rpc\Server\Service;
 
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Helper\JsonHelper;

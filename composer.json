@@ -1,7 +1,7 @@
 {
-  "name": "swoft/framework",
+  "name": "swoft/rpc-server",
   "type": "library",
-  "keywords": ["php", "swoole", "swoft"],
+  "keywords": ["php", "swoole", "swoft","rpc"],
   "description": "microservice framework base on swoole",
   "license": "apache2.0",
   "require": {
@@ -19,15 +19,12 @@
     "classmap": [
     ],
     "psr-4": {
-      "Swoft\\":"src/"
-    },
-    "files": [
-      "src/Helper/Functions.php"
-    ]
+      "Swoft\\Rpc\\":"src/"
+    }
   },
   "autoload-dev": {
     "psr-4": {
-      "Swoft\\Test\\": "test/TestCases"
+      "Swoft\\RPC\\Test\\": "test/TestCases"
     }
   },
   "repositories": {

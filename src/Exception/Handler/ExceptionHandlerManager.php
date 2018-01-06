@@ -41,6 +41,7 @@ class ExceptionHandlerManager
      * Handle the exception and return a response
      *
      * @param \Throwable $throwable
+     *
      * @return null|\Swoft\Web\Response
      */
     public static function handle(\Throwable $throwable)

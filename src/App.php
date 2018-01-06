@@ -299,9 +299,11 @@ class App
 
     /**
      * 触发事件
-     * @param string|\Swoft\Event\EventInterface $event 发布的事件名称|对象
-     * @param mixed $target
-     * @param array $params 附加数据信息
+     *
+     * @param string|\Swoft\Event\EventInterface $event  发布的事件名称|对象
+     * @param mixed                              $target
+     * @param array                              $params 附加数据信息
+     *
      * @return mixed
      */
     public static function trigger($event, $target = null, ...$params)

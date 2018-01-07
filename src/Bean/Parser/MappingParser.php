@@ -2,8 +2,9 @@
 
 namespace Swoft\Rpc\Server\Bean\Parser;
 
-use Swoft\Bean\Annotation\Mapping;
-use Swoft\Bean\Collector;
+use Swoft\Bean\Parser\AbstractParser;
+use Swoft\Rpc\Server\Bean\Annotation\Mapping;
+use Swoft\Rpc\Server\Bean\ServiceCollector;
 
 /**
  * Mapping注解解析
@@ -28,15 +29,11 @@ class MappingParser extends AbstractParser
      */
     public function parser(string $className, $objectAnnotation = null, string $propertyName = "", string $methodName = "", $propertyValue = null)
     {
-        if (!isset(Collector::$serviceMapping[$className])) {
+        $collector = ServiceCollector::getCollector();
+        if (!isset($collector[$className])) {
             return;
         }
 
-        // 路由收集
-        $mapped = $objectAnnotation->getName();
-        Collector::$serviceMapping[$className]['routes'][] = [
-            'mappedName' => $mapped,
-            'methodName' => $methodName
-        ];
+        ServiceCollector::collect($className, $objectAnnotation, $propertyName, $methodName, $propertyValue);
     }
 }

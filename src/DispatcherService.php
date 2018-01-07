@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Service;
+namespace Swoft\Rpc\Server;
 
 use Swoft\App;
 use Swoft\Core\DispatcherInterface;

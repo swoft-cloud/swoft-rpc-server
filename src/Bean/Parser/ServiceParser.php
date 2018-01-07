@@ -3,8 +3,9 @@
 namespace Swoft\Rpc\Server\Bean\Parser;
 
 use Swoft\Bean\Annotation\Scope;
-use Swoft\Bean\Annotation\Service;
-use Swoft\Bean\Collector;
+use Swoft\Bean\Parser\AbstractParser;
+use Swoft\Rpc\Server\Bean\ServiceCollector;
+use Swoft\Rpc\Server\Bean\Annotation\Service;
 
 /**
  * Service注解
@@ -30,11 +31,9 @@ class ServiceParser extends AbstractParser
     public function parser(string $className, $objectAnnotation = null, string $propertyName = "", string $methodName = "", $propertyValue = null)
     {
         $beanName = $className;
-        $scope = Scope::SINGLETON;
+        $scope    = Scope::SINGLETON;
 
-        // service映射收集
-        $serverName = $objectAnnotation->getName();
-        Collector::$serviceMapping[$className]['name'] = $serverName;
+        ServiceCollector::collect($className, $objectAnnotation, $propertyName, $methodName, $propertyValue);
 
         return [$beanName, $scope, ""];
     }

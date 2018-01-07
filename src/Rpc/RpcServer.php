@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Rpc\Server\Server;
+namespace Swoft\Rpc\Server\Rpc;
 
 use Swoft\Server\AbstractServer;
 use Swoole\Server;

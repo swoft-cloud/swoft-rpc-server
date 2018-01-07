@@ -5,7 +5,7 @@ namespace Swoft\Rpc\Server\Console\Command;
 use Swoft\Console\ConsoleCommand;
 use Swoft\Console\Input\Input;
 use Swoft\Console\Output\Output;
-use Swoft\Server\RpcServer;
+use Swoft\Rpc\Server\Rpc\RpcServer;
 
 /**
  * the group command list of rpc server

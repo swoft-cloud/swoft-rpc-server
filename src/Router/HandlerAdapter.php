@@ -4,12 +4,12 @@ namespace Swoft\Rpc\Server\Router\Service;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
-use Swoft\Core\Response;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Helper\PhpHelper;
 use Swoft\Helper\ResponseHelper;
-use Swoft\Middleware\Service\PackerMiddleware;
+use Swoft\Rpc\Server\Middleware\Service\PackerMiddleware;
 use Swoft\Router\HandlerAdapterInterface;
+use Swoft\Rpc\Server\Rpc\Response;
 
 /**
  * service handler adapter

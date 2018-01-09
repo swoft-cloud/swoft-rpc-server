@@ -7,9 +7,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Bean\Annotation\Bean;
-use Swoft\Event\AppEvent;
 use Swoft\Middleware\MiddlewareInterface;
-use Swoft\Router\Service\HandlerAdapter;
+use Swoft\Rpc\Server\Event\RpcServerEvent;
+use Swoft\Rpc\Server\Router\Service\HandlerAdapter;
 
 /**
  * service packer
@@ -53,15 +53,15 @@ class PackerMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $packer = App::getPacker();
+        $packer = service_packer();
         $data   = $request->getAttribute(self::ATTRIBUTE_DATA);
         $data   = $packer->unpack($data);
 
         // init data and trigger event
-        App::trigger(AppEvent::BEFORE_RECEIVE, null, $data);
+        App::trigger(RpcServerEvent::BEFORE_RECEIVE, null, $data);
         $request = $request->withAttribute(self::ATTRIBUTE_DATA, $data);
 
-        /* @var \Swoft\Core\Response $response */
+        /* @var \Swoft\Rpc\Server\Rpc\Response $response */
         $response      = $handler->handle($request);
         $serviceResult = $response->getAttribute(HandlerAdapter::ATTRIBUTE);
         $serviceResult = $packer->pack($serviceResult);

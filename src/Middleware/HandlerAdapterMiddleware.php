@@ -33,7 +33,7 @@ class HandlerAdapterMiddleware implements MiddlewareInterface
     {
         $serviceHandler = $request->getAttribute(RouterMiddleware::ATTRIBUTE);
 
-        /* @var \Swoft\Router\Service\HandlerAdapter $handlerAdapter */
+        /* @var \Swoft\Rpc\Server\Router\Service\HandlerAdapter $handlerAdapter */
         $handlerAdapter = App::getBean('serviceHandlerAdapter');
         $response       = $handlerAdapter->doHandler($request, $serviceHandler);
 

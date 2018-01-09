@@ -7,8 +7,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Core\RequestHandler;
 use Swoft\Bean\Annotation\Bean;
-use Swoft\Bean\Collector;
 use Swoft\Middleware\MiddlewareInterface;
+use Swoft\Bean\Collector\MiddlewareCollector;
 
 /**
  * the annotation middlewares of action
@@ -34,7 +34,8 @@ class UserMiddleware implements MiddlewareInterface
         list($className, $funcName) = $serviceHandler;
 
         $middlewares         = [];
-        $middlewareCollector = Collector::$serviceMapping[$className]['middlewares']??[];
+        $collector           = MiddlewareCollector::getCollector();
+        $middlewareCollector = $collector[$className]['middlewares']??[];
         $groupMiddlewares    = $middlewareCollector['group'] ?? [];
         $funcMiddlewares     = $middlewareCollector['actions'][$funcName]??[];
 

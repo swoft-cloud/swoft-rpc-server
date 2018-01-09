@@ -5,15 +5,15 @@ namespace Swoft\Rpc\Server;
 use Swoft\App;
 use Swoft\Core\DispatcherInterface;
 use Swoft\Core\RequestHandler;
-use Swoft\Event\AppEvent;
 use Swoft\Helper\ResponseHelper;
-use Swoft\Middleware\Service\HandlerAdapterMiddleware;
-use Swoft\Middleware\Service\PackerMiddleware;
-use Swoft\Middleware\Service\RouterMiddleware;
-use Swoft\Middleware\Service\UserMiddleware;
-use Swoft\Middleware\Service\ValidatorMiddleware;
-use Swoft\Router\Service\HandlerAdapter;
-use Swoft\Web\Request;
+use Swoft\Rpc\Server\Event\RpcServerEvent;
+use Swoft\Rpc\Server\Middleware\Service\HandlerAdapterMiddleware;
+use Swoft\Rpc\Server\Middleware\Service\PackerMiddleware;
+use Swoft\Rpc\Server\Middleware\Service\RouterMiddleware;
+use Swoft\Rpc\Server\Middleware\Service\UserMiddleware;
+use Swoft\Rpc\Server\Middleware\Service\ValidatorMiddleware;
+use Swoft\Rpc\Server\Router\Service\HandlerAdapter;
+use Swoft\Rpc\Server\Rpc\Request;
 use Swoole\Server;
 
 /**
@@ -65,15 +65,15 @@ class DispatcherService implements DispatcherInterface
             $middlewares    = $this->requestMiddlewares();
             $requestHandler = new RequestHandler($middlewares, $this->handlerAdapter);
 
-            /* @var \Swoft\Core\Response $response */
+            /* @var \Swoft\Rpc\Server\Rpc\Response $response */
             $response = $requestHandler->handle($serviceRequest);
             $data     = $response->getAttribute(HandlerAdapter::ATTRIBUTE);
         } catch (\Throwable $t) {
             $message = $t->getMessage() . " " . $t->getFile() . " " . $t->getLine();
             $data    = ResponseHelper::formatData("", $message, $t->getCode());
-            $data    = App::getPacker()->pack($data);
+            $data    = service_packer()->pack($data);
         } finally {
-            App::trigger(AppEvent::AFTER_REQUEST);
+            App::trigger(RpcServerEvent::AFTER_RECEIVE);
             $server->send($fd, $data);
         }
     }
@@ -120,7 +120,7 @@ class DispatcherService implements DispatcherInterface
      * @param int            $fromid
      * @param string         $data
      *
-     * @return \Swoft\Web\Request
+     * @return Request
      */
     private function getRequest(Server $server, int $fd, int $fromid, string $data)
     {

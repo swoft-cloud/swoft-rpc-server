@@ -2,6 +2,7 @@
 
 namespace Swoft\Rpc\Server\Rpc;
 
+use Swoft\App;
 use Swoft\Server\AbstractServer;
 use Swoole\Server;
 
@@ -42,5 +43,44 @@ class RpcServer extends AbstractServer
         // before start
         $this->beforeStart();
         $this->server->start();
+    }
+
+    /**
+     * RPC请求每次启动一个协程来处理
+     *
+     * @param Server $server
+     * @param int    $fd
+     * @param int    $fromId
+     * @param string $data
+     */
+    public function onReceive(Server $server, int $fd, int $fromId, string $data)
+    {
+        App::getBean('dispatcherService')->doDispatcher($server, $fd, $fromId, $data);
+    }
+
+    /**
+     * 连接成功后回调函数
+     *
+     * @param Server $server
+     * @param int    $fd
+     * @param int    $from_id
+     *
+     */
+    public function onConnect(Server $server, int $fd, int $from_id)
+    {
+        var_dump("connnect------");
+    }
+
+    /**
+     * 连接断开成功后回调函数
+     *
+     * @param Server $server
+     * @param int    $fd
+     * @param int    $reactorId
+     *
+     */
+    public function onClose(Server $server, int $fd, int $reactorId)
+    {
+        var_dump("close------");
     }
 }

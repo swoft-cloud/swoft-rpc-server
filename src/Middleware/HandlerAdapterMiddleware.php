@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Rpc\Server\Middleware\Service;
+namespace Swoft\Rpc\Server\Middleware;
 
 use Interop\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -33,7 +33,7 @@ class HandlerAdapterMiddleware implements MiddlewareInterface
     {
         $serviceHandler = $request->getAttribute(RouterMiddleware::ATTRIBUTE);
 
-        /* @var \Swoft\Rpc\Server\Router\Service\HandlerAdapter $handlerAdapter */
+        /* @var \Swoft\Rpc\Server\Router\HandlerAdapter $handlerAdapter */
         $handlerAdapter = App::getBean('serviceHandlerAdapter');
         $response       = $handlerAdapter->doHandler($request, $serviceHandler);
 

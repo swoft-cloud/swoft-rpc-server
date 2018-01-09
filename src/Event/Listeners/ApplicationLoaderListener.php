@@ -7,7 +7,7 @@ use Swoft\Bean\Annotation\Listener;
 use Swoft\Event\AppEvent;
 use Swoft\Event\EventHandlerInterface;
 use Swoft\Event\EventInterface;
-use Swoft\Rpc\Server\Bean\ServiceCollector;
+use Swoft\Rpc\Server\Bean\Collector\ServiceCollector;
 
 /**
  * the listener of applicatioin loader
@@ -26,7 +26,7 @@ class ApplicationLoaderListener implements EventHandlerInterface
      */
     public function handle(EventInterface $event)
     {
-        /* @var \Swoft\Rpc\Server\Router\Service\HandlerMapping $serviceRouter */
+        /* @var \Swoft\Rpc\Server\Router\HandlerMapping $serviceRouter */
         $serviceRouter = App::getBean('serviceRouter');
 
         $serviceMapping = ServiceCollector::getCollector();

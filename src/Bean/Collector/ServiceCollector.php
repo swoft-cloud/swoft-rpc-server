@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Rpc\Server\Bean;
+namespace Swoft\Rpc\Server\Bean\Collector;
 
 use Swoft\Bean\CollectorInterface;
 use Swoft\Rpc\Server\Bean\Annotation\Mapping;
@@ -48,6 +48,13 @@ class ServiceCollector implements CollectorInterface
             ];
 
             return;
+        }
+        if ($objectAnnotation == null && isset(self::$serviceMapping[$className])) {
+            self::$serviceMapping[$className]['routes'][] = [
+                'mappedName' => "",
+                'methodName' => $methodName,
+            ];
+            return ;
         }
     }
 

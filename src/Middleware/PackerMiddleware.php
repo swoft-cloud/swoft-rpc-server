@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Rpc\Server\Middleware\Service;
+namespace Swoft\Rpc\Server\Middleware;
 
 use Interop\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -9,7 +9,7 @@ use Swoft\App;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Middleware\MiddlewareInterface;
 use Swoft\Rpc\Server\Event\RpcServerEvent;
-use Swoft\Rpc\Server\Router\Service\HandlerAdapter;
+use Swoft\Rpc\Server\Router\HandlerAdapter;
 
 /**
  * service packer

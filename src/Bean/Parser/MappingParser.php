@@ -4,7 +4,7 @@ namespace Swoft\Rpc\Server\Bean\Parser;
 
 use Swoft\Bean\Parser\AbstractParser;
 use Swoft\Rpc\Server\Bean\Annotation\Mapping;
-use Swoft\Rpc\Server\Bean\ServiceCollector;
+use Swoft\Rpc\Server\Bean\Collector\ServiceCollector;
 
 /**
  * Mapping注解解析

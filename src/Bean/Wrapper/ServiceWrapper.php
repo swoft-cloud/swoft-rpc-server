@@ -11,7 +11,7 @@ use Swoft\Bean\Annotation\Middlewares;
 use Swoft\Bean\Annotation\Number;
 use Swoft\Bean\Annotation\Strings;
 use Swoft\Bean\Annotation\Value;
-use Swoft\Bean\Wrapper\AbstractWrapper;
+use Swoft\Bean\Wrapper\AbstractWrapperInterface;
 use Swoft\Rpc\Server\Bean\Annotation\Mapping;
 use Swoft\Rpc\Server\Bean\Annotation\Service;
 
@@ -24,7 +24,7 @@ use Swoft\Rpc\Server\Bean\Annotation\Service;
  * @copyright Copyright 2010-2016 swoft software
  * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
-class ServiceWrapper extends AbstractWrapper
+class ServiceWrapper extends AbstractWrapperInterface
 {
     /**
      * 类注解

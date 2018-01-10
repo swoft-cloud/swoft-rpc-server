@@ -2,7 +2,7 @@
 
 namespace Swoft\Rpc\Server\Bean\Parser;
 
-use Swoft\Bean\Parser\AbstractParser;
+use Swoft\Bean\Parser\AbstractParserInterface;
 use Swoft\Rpc\Server\Bean\Annotation\Mapping;
 use Swoft\Rpc\Server\Bean\Collector\ServiceCollector;
 
@@ -15,7 +15,7 @@ use Swoft\Rpc\Server\Bean\Collector\ServiceCollector;
  * @copyright Copyright 2010-2016 swoft software
  * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
-class MappingParser extends AbstractParser
+class MappingParser extends AbstractParserInterface
 {
     /**
      * Mapping注解解析解析

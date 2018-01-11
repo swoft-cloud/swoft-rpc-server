@@ -7,12 +7,12 @@ use Swoft\Core\DispatcherInterface;
 use Swoft\Core\RequestHandler;
 use Swoft\Helper\ResponseHelper;
 use Swoft\Rpc\Server\Event\RpcServerEvent;
-use Swoft\Rpc\Server\Middleware\Service\HandlerAdapterMiddleware;
-use Swoft\Rpc\Server\Middleware\Service\PackerMiddleware;
-use Swoft\Rpc\Server\Middleware\Service\RouterMiddleware;
-use Swoft\Rpc\Server\Middleware\Service\UserMiddleware;
-use Swoft\Rpc\Server\Middleware\Service\ValidatorMiddleware;
-use Swoft\Rpc\Server\Router\Service\HandlerAdapter;
+use Swoft\Rpc\Server\Middleware\HandlerAdapterMiddleware;
+use Swoft\Rpc\Server\Middleware\PackerMiddleware;
+use Swoft\Rpc\Server\Middleware\RouterMiddleware;
+use Swoft\Rpc\Server\Middleware\UserMiddleware;
+use Swoft\Rpc\Server\Middleware\ValidatorMiddleware;
+use Swoft\Rpc\Server\Router\HandlerAdapter;
 use Swoft\Rpc\Server\Rpc\Request;
 use Swoole\Server;
 

@@ -2,7 +2,8 @@
 
 namespace Swoft\Rpc\Server\Rpc;
 
-use Swoft\App;
+use Swoft\Bean\Collector\SwooleListenerCollector;
+use Swoft\Bootstrap\SwooleEvent;
 use Swoft\Server\AbstractServer;
 use Swoole\Server;
 
@@ -30,15 +31,17 @@ class RpcServer extends AbstractServer
         $listenSetting = $this->getListenTcpSetting();
         $setting = array_merge($this->setting, $listenSetting);
         $this->server->set($setting);
-        $this->server->on('start', [$this, 'onStart']);
-        $this->server->on('workerStart', [$this, 'onWorkerStart']);
-        $this->server->on('managerStart', [$this, 'onManagerStart']);
-        $this->server->on('task', [$this, 'onTask']);
-        $this->server->on('finish', [$this, 'onFinish']);
-        $this->server->on('connect', [$this, 'onConnect']);
-        $this->server->on('receive', [$this, 'onReceive']);
-        $this->server->on('pipeMessage', [$this, 'onPipeMessage']);
-        $this->server->on('close', [$this, 'onClose']);
+        $this->server->set($this->setting);
+
+        $this->server->on(SwooleEvent::ON_START, [$this, 'onStart']);
+        $this->server->on(SwooleEvent::ON_WORKER_START, [$this, 'onWorkerStart']);
+        $this->server->on(SwooleEvent::ON_MANAGER_START, [$this, 'onManagerStart']);
+        $this->server->on(SwooleEvent::ON_TASK, [$this, 'onTask']);
+        $this->server->on(SwooleEvent::ON_PIPE_MESSAGE, [$this, 'onPipeMessage']);
+        $this->server->on(SwooleEvent::ON_FINISH, [$this, 'onFinish']);
+
+        $swooleEvents = $this->getSwooleEvents();
+        $this->registerSwooleEvents($this->server, $swooleEvents);
 
         // before start
         $this->beforeStart();
@@ -46,41 +49,13 @@ class RpcServer extends AbstractServer
     }
 
     /**
-     * RPC请求每次启动一个协程来处理
-     *
-     * @param Server $server
-     * @param int    $fd
-     * @param int    $fromId
-     * @param string $data
+     * @return array
      */
-    public function onReceive(Server $server, int $fd, int $fromId, string $data)
+    private function getSwooleEvents()
     {
-        App::getBean('dispatcherService')->doDispatcher($server, $fd, $fromId, $data);
-    }
-
-    /**
-     * 连接成功后回调函数
-     *
-     * @param Server $server
-     * @param int    $fd
-     * @param int    $from_id
-     *
-     */
-    public function onConnect(Server $server, int $fd, int $from_id)
-    {
-        var_dump("connnect------");
-    }
-
-    /**
-     * 连接断开成功后回调函数
-     *
-     * @param Server $server
-     * @param int    $fd
-     * @param int    $reactorId
-     *
-     */
-    public function onClose(Server $server, int $fd, int $reactorId)
-    {
-        var_dump("close------");
+        $swooleListeners = SwooleListenerCollector::getCollector();
+        $portEvents = $swooleListeners[SwooleEvent::TYPE_PORT][0]??[];
+        $serverEvents = $swooleListeners[SwooleEvent::TYPE_SERVER]??[];
+        return array_merge($portEvents, $serverEvents);
     }
 }

@@ -4,8 +4,8 @@ namespace Swoft\Rpc\Server\Rpc;
 
 use Swoft\Bean\Collector\SwooleListenerCollector;
 use Swoft\Bootstrap\SwooleEvent;
-use Swoft\Server\AbstractServer;
 use Swoole\Server;
+use Swoft\Bootstrap\Server\AbstractServer;
 
 /**
  * RPC服务器

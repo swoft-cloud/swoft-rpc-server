@@ -31,14 +31,9 @@ class RpcServer extends AbstractServer
         $listenSetting = $this->getListenTcpSetting();
         $setting = array_merge($this->setting, $listenSetting);
         $this->server->set($setting);
-        $this->server->set($this->setting);
-
         $this->server->on(SwooleEvent::ON_START, [$this, 'onStart']);
         $this->server->on(SwooleEvent::ON_WORKER_START, [$this, 'onWorkerStart']);
         $this->server->on(SwooleEvent::ON_MANAGER_START, [$this, 'onManagerStart']);
-        $this->server->on(SwooleEvent::ON_TASK, [$this, 'onTask']);
-        $this->server->on(SwooleEvent::ON_PIPE_MESSAGE, [$this, 'onPipeMessage']);
-        $this->server->on(SwooleEvent::ON_FINISH, [$this, 'onFinish']);
 
         $swooleEvents = $this->getSwooleEvents();
         $this->registerSwooleEvents($this->server, $swooleEvents);

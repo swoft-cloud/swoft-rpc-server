@@ -6,14 +6,8 @@ use Swoft\Console\Bean\Annotation\Command;
 use Swoft\Rpc\Server\Rpc\RpcServer;
 
 /**
- * the group command list of rpc server
- *
+ * The group command list of rpc server
  * @Command(coroutine=false,server=true)
- * @uses      RpcCommand
- * @version   2017年10月11日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class RpcCommand
 {
@@ -22,17 +16,15 @@ class RpcCommand
      *
      * @Usage
      * rpc:{command} [arguments] [options]
-     *
      * @Options
      * -d,--d start by daemonized process
-     *
      * @Example
      * php swoft.php rpc:start -d
      */
     public function start()
     {
         $rpcServer = $this->getRpcServer();
-        
+
         // 是否正在运行
         if ($rpcServer->isRunning()) {
             $serverStatus = $rpcServer->getServerSetting();
@@ -67,10 +59,8 @@ class RpcCommand
      *
      * @Usage
      * rpc:{command} [arguments] [options]
-     *
      * @Options
      * -t only to reload task processes, default to reload worker and task
-     *
      * @Example
      * php swoft.php rpc:reload
      */
@@ -79,17 +69,17 @@ class RpcCommand
         $rpcServer = $this->getRpcServer();
 
         // 是否已启动
-        if (!$rpcServer->isRunning()) {
+        if (! $rpcServer->isRunning()) {
             output()->writeln('<error>The server is not running! cannot reload</error>', true, true);
         }
 
         // 打印信息
-        output()->writeln("<info>Server {input()->getFullScript()} is reloading</info>");
+        output()->writeln(sprintf('<info>Server %s is reloading ...</info>', input()->getFullScript()));
 
         // 重载
         $reloadTask = input()->hasOpt('t');
         $rpcServer->reload($reloadTask);
-        output()->writeln("<success>Server {input()->getFullScript()} reload success</success>");
+        output()->writeln(sprintf('<success>Server %s is reload success</success>', input()->getFullScript()));
     }
 
     /**
@@ -97,7 +87,6 @@ class RpcCommand
      *
      * @Usage
      * rpc:{command} [arguments] [options]
-     *
      * @Example
      * php swoft.php rpc:stop
      */
@@ -106,7 +95,7 @@ class RpcCommand
         $rpcServer = $this->getRpcServer();
 
         // 是否已启动
-        if (!$rpcServer->isRunning()) {
+        if (! $rpcServer->isRunning()) {
             output()->writeln('<error>The server is not running! cannot stop</error>', true, true);
         }
 
@@ -115,16 +104,16 @@ class RpcCommand
         $pidFile = $serverStatus['pfile'];
 
         @unlink($pidFile);
-        output()->writeln("<info>Swoft {input()->getFullScript()} is stopping ...</info>");
+        output()->writeln(sprintf('<info>Swoft %s is stopping ...</info>', input()->getFullScript()));
 
         $result = $rpcServer->stop();
 
         // 停止失败
-        if (!$result) {
-            output()->writeln("<error>Swoft {input()->getFullScript()} stop fail</error>", true, true);
+        if (! $result) {
+            output()->writeln(sprintf('<error>Swoft %s stop fail</error>', input()->getFullScript()));
         }
 
-        output()->writeln("<success>Swoft {input()->getFullScript()} stop success!</success>");
+        output()->writeln(sprintf('<success>Swoft %s stop success</success>', input()->getFullScript()));
     }
 
     /**
@@ -132,7 +121,6 @@ class RpcCommand
      *
      * @Usage
      * rpc:{command} [arguments] [options]
-     *
      * @Example
      * php swoft.php rpc:restart
      */
@@ -153,7 +141,7 @@ class RpcCommand
     /**
      * @return RpcServer
      */
-    private function getRpcServer()
+    private function getRpcServer(): RpcServer
     {
         $script = input()->getScript();
         $rpcServer = new RpcServer();

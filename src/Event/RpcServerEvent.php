@@ -3,23 +3,17 @@
 namespace Swoft\Rpc\Server\Event;
 
 /**
- *
- *
- * @uses      RpcServerEvent
- * @version   2018年01月09日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
+ * RPC Server event defines
  */
 class RpcServerEvent
 {
     /**
-     * before rpc
+     * Before rpc request
      */
-    const BEFORE_RECEIVE = "beforeReceive";
+    const BEFORE_RECEIVE = 'beforeReceive';
 
     /**
-     * after rpc
+     * After rpc request
      */
-    const AFTER_RECEIVE = "afterReceive";
+    const AFTER_RECEIVE = 'afterReceive';
 }

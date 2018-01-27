@@ -9,36 +9,27 @@ use Swoft\Event\EventHandlerInterface;
 use Swoft\Rpc\Server\Event\RpcServerEvent;
 
 /**
- * rpc请求处理之前事件
- *
- *
+ * Event before RPC request
  * @Listener(RpcServerEvent::BEFORE_RECEIVE)
- * @uses      BeforeReceiveListener
- * @version   2017年08月30日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 Swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class BeforeReceiveListener implements EventHandlerInterface
 {
 
     /**
-     * 事件回调
-     *
-     * @param EventInterface $event      事件对象
+     * @param EventInterface $event
      */
     public function handle(EventInterface $event)
     {
         $params = $event->getParams();
 
-        if (!isset($params[0])) {
-            return ;
+        if (! isset($params[0])) {
+            return;
         }
 
         $data = $params[0];
-        $logid = $data['logid'] ?? uniqid();
+        $logid = $data['logid'] ?? uniqid('', true);
         $spanid = $data['spanid'] ?? 0;
-        $uri = $data['func'] ?? "null";
+        $uri = $data['func'] ?? 'null';
 
         $contextData = [
             'logid'       => $logid,

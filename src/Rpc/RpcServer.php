@@ -8,26 +8,19 @@ use Swoole\Server;
 use Swoft\Bootstrap\Server\AbstractServer;
 
 /**
- * RPC服务器
- *
- * @uses      RpcServer
- * @version   2017年10月14日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
+ * RPC Server
  */
 class RpcServer extends AbstractServer
 {
 
     /**
-     * 启动服务器
+     * Start server
      */
     public function start()
     {
-        // rpc server
         $this->server = new Server($this->tcpSetting['host'], $this->tcpSetting['port'], $this->tcpSetting['model'], $this->tcpSetting['type']);
 
-        // 设置回调函数
+        // Bind event callback
         $listenSetting = $this->getListenTcpSetting();
         $setting = array_merge($this->setting, $listenSetting);
         $this->server->set($setting);
@@ -46,11 +39,11 @@ class RpcServer extends AbstractServer
     /**
      * @return array
      */
-    private function getSwooleEvents()
+    private function getSwooleEvents(): array
     {
         $swooleListeners = SwooleListenerCollector::getCollector();
-        $portEvents = $swooleListeners[SwooleEvent::TYPE_PORT][0]??[];
-        $serverEvents = $swooleListeners[SwooleEvent::TYPE_SERVER]??[];
+        $portEvents = $swooleListeners[SwooleEvent::TYPE_PORT][0] ?? [];
+        $serverEvents = $swooleListeners[SwooleEvent::TYPE_SERVER] ?? [];
         return array_merge($portEvents, $serverEvents);
     }
 }

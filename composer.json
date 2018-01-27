@@ -12,7 +12,7 @@
     "require": {
         "swoft/framework": "dev-component",
         "swoft/console": "dev-master",
-        "psr/http-message": "^1.0",
+        "swoft/http-message": "dev-master",
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
@@ -33,6 +33,10 @@
         {
             "type": "git",
             "url": "https://github.com/swoft-cloud/swoft-console"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/swoft-cloud/swoft-http-message"
         },
         {
             "type": "git",

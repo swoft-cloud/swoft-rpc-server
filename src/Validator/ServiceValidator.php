@@ -7,32 +7,25 @@ use Swoft\Bean\Annotation\ValidatorFrom;
 use Swoft\Validator\AbstractValidator;
 
 /**
- * the validator of service
- *
+ * Service Validator
  * @Bean()
- * @uses      ServiceValidator
- * @version   2017年12月10日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class ServiceValidator extends AbstractValidator
 {
     /**
-     * do validator
-     *
      * @param mixed $validators
      * @param array ...$params
-     *
      * @return mixed
+     * @throws \ReflectionException
+     * @throws \Swoft\Exception\ValidatorException
      */
     public function validate($validators, ...$params)
     {
         list($serviceHandler, $serviceData) = $params;
         $args = $this->getServiceArgs($serviceHandler, $serviceData);
 
-        foreach ($validators as $type => $validator) {
-            if ($type != ValidatorFrom::SERVICE) {
+        foreach ($validators ?? [] as $type => $validator) {
+            if ($type !== ValidatorFrom::SERVICE) {
                 continue;
             }
             $this->validateArg($args, $validator);
@@ -47,11 +40,12 @@ class ServiceValidator extends AbstractValidator
      *
      * @param array $args
      * @param array $validator
+     * @throws \Swoft\Exception\ValidatorException
      */
     public function validateArg(array $args, array $validator)
     {
         foreach ($validator as $name => $info) {
-            if (!isset($args[$name])) {
+            if (! isset($args[$name])) {
                 continue;
             }
             $this->doValidation($args[$name], $info);
@@ -63,26 +57,26 @@ class ServiceValidator extends AbstractValidator
      *
      * @param array $serviceHandler
      * @param array $serviceData
-     *
      * @return array
+     * @throws \ReflectionException
      */
-    private function getServiceArgs(array $serviceHandler, array $serviceData)
+    private function getServiceArgs(array $serviceHandler, array $serviceData): array
     {
         list($className, $method) = $serviceHandler;
-        $rc     = new \ReflectionClass($className);
-        $rm     = $rc->getMethod($method);
-        $mps    = $rm->getParameters();
-        $params = $serviceData['params']??[];
+        $rc = new \ReflectionClass($className);
+        $rm = $rc->getMethod($method);
+        $mps = $rm->getParameters();
+        $params = $serviceData['params'] ?? [];
 
         if (empty($params)) {
             return [];
         }
 
         $index = 0;
-        $args  = [];
+        $args = [];
         foreach ($mps as $mp) {
             $name = $mp->getName();
-            if (!isset($params[$index])) {
+            if (! isset($params[$index])) {
                 break;
             }
             $args[$name] = $params[$index];

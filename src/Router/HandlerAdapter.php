@@ -12,35 +12,28 @@ use Swoft\Router\HandlerAdapterInterface;
 use Swoft\Rpc\Server\Rpc\Response;
 
 /**
- * service handler adapter
- *
+ * Service handler adapter
  * @Bean("serviceHandlerAdapter")
- * @uses      HandlerAdapterMiddleware
- * @version   2017年11月23日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class HandlerAdapter implements HandlerAdapterInterface
 {
     /**
-     * the result of service handler
+     * The result of service handler
      */
     const ATTRIBUTE = 'serviceResult';
 
     /**
-     * execute service handler
+     * Execute service handler
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param array                                    $handler
-     *
      * @return Response
      */
-    public function doHandler(ServerRequestInterface $request, array $handler)
+    public function doHandler(ServerRequestInterface $request, array $handler): Response
     {
         // the function params of service
-        $data   = $request->getAttribute(PackerMiddleware::ATTRIBUTE_DATA);
-        $params = $data['params']?? [];
+        $data = $request->getAttribute(PackerMiddleware::ATTRIBUTE_DATA);
+        $params = $data['params'] ?? [];
 
         list($serviceClass, $method) = $handler;
         $service = App::getBean($serviceClass);
@@ -50,7 +43,7 @@ class HandlerAdapter implements HandlerAdapterInterface
         $response = ResponseHelper::formatData($response);
 
         // response
-        if (!$response instanceof Response) {
+        if (! $response instanceof Response) {
             $response = (new Response())->withAttribute(self::ATTRIBUTE, $response);
         }
 

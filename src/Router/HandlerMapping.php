@@ -5,48 +5,42 @@ namespace Swoft\Rpc\Server\Router;
 use Swoft\Router\HandlerMappingInterface;
 
 /**
- * handler of service
- *
- * @uses      HandlerMapping
- * @version   2017年11月23日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
+ * Handler of service
  */
 class HandlerMapping implements HandlerMappingInterface
 {
 
     /**
-     * service service
+     * Service suffix
      *
      * @var string
      */
     private $suffix = 'Service';
 
     /**
-     * service routes
+     * Service routes
      *
      * @var array
      */
     private $routes = [];
 
     /**
-     * get handler from router
+     * Get handler from router
      *
      * @param array ...$params
-     *
      * @return array
+     * @throws \InvalidArgumentException
      */
-    public function getHandler(...$params)
+    public function getHandler(...$params): array
     {
         list($data) = $params;
-        $func = $data['func']?? '';
+        $func = $data['func'] ?? '';
 
         return $this->match($func);
     }
 
     /**
-     * auto register routes
+     * Auto register routes
      *
      * @param array $serviceMapping
      */
@@ -62,15 +56,15 @@ class HandlerMapping implements HandlerMappingInterface
     }
 
     /**
-     * match route
+     * Match route
      *
      * @param $func
-     *
-     * @return mixed
+     * @return array
+     * @throws \InvalidArgumentException
      */
-    public function match($func)
+    public function match($func): array
     {
-        if (!isset($this->routes[$func])) {
+        if (! isset($this->routes[$func])) {
             throw new \InvalidArgumentException('the func of service is not exist，func=' . $func);
         }
 
@@ -78,7 +72,7 @@ class HandlerMapping implements HandlerMappingInterface
     }
 
     /**
-     * register one route
+     * Register one route
      *
      * @param string $className
      * @param array  $routes
@@ -93,29 +87,28 @@ class HandlerMapping implements HandlerMappingInterface
                 $mappedName = $methodName;
             }
 
-            $serviceKey                = "$prefix::$mappedName";
+            $serviceKey = $prefix . '::' . $mappedName;
             $this->routes[$serviceKey] = [$className, $methodName];
         }
     }
 
     /**
-     * get service from class name
+     * Get service from class name
      *
      * @param string $suffix
      * @param string $prefix
      * @param string $className
-     *
      * @return string
      */
-    private function getPrefix(string $suffix, string $prefix, string $className)
+    private function getPrefix(string $suffix, string $prefix, string $className): string
     {
-        // the  prefix of annotation is exist
-        if (!empty($prefix)) {
+        // The prefix of annotation is exist
+        if (! empty($prefix)) {
             return $prefix;
         }
 
-        // the prefix of annotation is empty
-        $reg    = '/^.*\\\(\w+)' . $suffix . '$/';
+        // The prefix of annotation is empty
+        $reg = '/^.*\\\(\w+)' . $suffix . '$/';
         $prefix = '';
 
         if ($result = preg_match($reg, $className, $match)) {

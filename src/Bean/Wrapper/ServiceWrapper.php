@@ -11,20 +11,14 @@ use Swoft\Bean\Annotation\Middlewares;
 use Swoft\Bean\Annotation\Number;
 use Swoft\Bean\Annotation\Strings;
 use Swoft\Bean\Annotation\Value;
-use Swoft\Bean\Wrapper\AbstractWrapperInterface;
+use Swoft\Bean\Wrapper\AbstractWrapper;
 use Swoft\Rpc\Server\Bean\Annotation\Mapping;
 use Swoft\Rpc\Server\Bean\Annotation\Service;
 
 /**
- * service封装器
- *
- * @uses      ServiceWrapper
- * @version   2017年10月15日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
+ * Servic eWrapper
  */
-class ServiceWrapper extends AbstractWrapperInterface
+class ServiceWrapper extends AbstractWrapper
 {
     /**
      * 类注解
@@ -73,7 +67,7 @@ class ServiceWrapper extends AbstractWrapperInterface
      *
      * @return bool
      */
-    public function isParseClassAnnotations(array $annotations)
+    public function isParseClassAnnotations(array $annotations): bool
     {
         return isset($annotations[Service::class]);
     }
@@ -85,7 +79,7 @@ class ServiceWrapper extends AbstractWrapperInterface
      *
      * @return bool
      */
-    public function isParsePropertyAnnotations(array $annotations)
+    public function isParsePropertyAnnotations(array $annotations): bool
     {
         return isset($annotations[Inject::class]) || isset($annotations[Value::class]);
     }
@@ -97,7 +91,7 @@ class ServiceWrapper extends AbstractWrapperInterface
      *
      * @return bool
      */
-    public function isParseMethodAnnotations(array $annotations)
+    public function isParseMethodAnnotations(array $annotations): bool
     {
         return isset($annotations[Mapping::class]);
     }

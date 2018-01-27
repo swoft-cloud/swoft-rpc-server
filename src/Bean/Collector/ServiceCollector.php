@@ -7,13 +7,7 @@ use Swoft\Rpc\Server\Bean\Annotation\Mapping;
 use Swoft\Rpc\Server\Bean\Annotation\Service;
 
 /**
- * the collector of service mapping
- *
- * @uses      Collector
- * @version   2018年01月07日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
+ * Service colletor
  */
 class ServiceCollector implements CollectorInterface
 {
@@ -29,11 +23,16 @@ class ServiceCollector implements CollectorInterface
      * @param string $methodName
      * @param null   $propertyValue
      */
-    public static function collect(string $className, $objectAnnotation = null, string $propertyName = "", string $methodName = "", $propertyValue = null)
-    {
+    public static function collect(
+        string $className,
+        $objectAnnotation = null,
+        string $propertyName = '',
+        string $methodName = '',
+        $propertyValue = null
+    ) {
         // collect service
         if ($objectAnnotation instanceof Service) {
-            $serverName                               = $objectAnnotation->getName();
+            $serverName = $objectAnnotation->getName();
             self::$serviceMapping[$className]['name'] = $serverName;
 
             return;
@@ -41,7 +40,7 @@ class ServiceCollector implements CollectorInterface
 
         // collect method
         if ($objectAnnotation instanceof Mapping) {
-            $mapped                                       = $objectAnnotation->getName();
+            $mapped = $objectAnnotation->getName();
             self::$serviceMapping[$className]['routes'][] = [
                 'mappedName' => $mapped,
                 'methodName' => $methodName,
@@ -49,16 +48,19 @@ class ServiceCollector implements CollectorInterface
 
             return;
         }
-        if ($objectAnnotation == null && isset(self::$serviceMapping[$className])) {
+        if ($objectAnnotation === null && isset(self::$serviceMapping[$className])) {
             self::$serviceMapping[$className]['routes'][] = [
-                'mappedName' => "",
+                'mappedName' => '',
                 'methodName' => $methodName,
             ];
-            return ;
+            return;
         }
     }
 
-    public static function getCollector()
+    /**
+     * @return array
+     */
+    public static function getCollector(): array
     {
         return self::$serviceMapping;
     }

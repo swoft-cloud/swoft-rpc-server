@@ -3,16 +3,10 @@
 namespace Swoft\Rpc\Server\Bean\Annotation;
 
 /**
- * RPC注解
+ * RPC Servie annotation
  *
  * @Annotation
  * @Target("CLASS")
- *
- * @uses      Service
- * @version   2017年10月15日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class Service
 {
@@ -21,7 +15,7 @@ class Service
      *
      * @var string
      */
-    private $name = "";
+    private $name = '';
 
     /**
      * Service constructor.

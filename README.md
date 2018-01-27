@@ -1,6 +1,9 @@
-# 依赖
+# Swoft Rpc-server
+Swoft Rpc-server Component
 
-# 安装
+# Install
 
-# 协议
-Swoft的开源协议为apache 2.0，详情参见[LICENSE](LICENSE)。
+# Document
+
+# LICENSE
+Swoft Rpc-server Component is open-sourced software licensed under the [Apache license](LICENSE).

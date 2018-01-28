@@ -4,14 +4,13 @@ namespace Swoft\Rpc\Server\Bean\Parser;
 
 use Swoft\Bean\Annotation\Scope;
 use Swoft\Bean\Parser\AbstractParser;
-use Swoft\Bean\Parser\AbstractParserInterface;
 use Swoft\Rpc\Server\Bean\Collector\ServiceCollector;
 use Swoft\Rpc\Server\Bean\Annotation\Service;
 
 /**
  * Service annotation parser
  */
-class ServiceParser extends AbstractParserInterface
+class ServiceParser extends AbstractParser
 {
     /**
      * @param string  $className

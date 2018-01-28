@@ -51,7 +51,7 @@ class ServiceDispatcher implements DispatcherInterface
         try {
             // request middlewares
             $serviceRequest = $this->getRequest($server, $fd, $fromid, $data);
-            $middlewares = $this->requestMiddlewares();
+            $middlewares = $this->requestMiddleware();
             $requestHandler = new RequestHandler($middlewares, $this->handlerAdapter);
 
             /* @var \Swoft\Rpc\Server\Rpc\Response $response */
@@ -74,7 +74,7 @@ class ServiceDispatcher implements DispatcherInterface
      */
     public function requestMiddleware(): array
     {
-        return array_merge($this->firstMiddleware(), $this->middlewares, $this->lastMiddleware());
+        return array_merge($this->preMiddleware(), $this->middlewares, $this->afterMiddleware());
     }
 
     /**

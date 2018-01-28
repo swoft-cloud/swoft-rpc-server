@@ -34,7 +34,7 @@ class HandlerMapping implements HandlerMappingInterface
     public function getHandler(...$params): array
     {
         list($data) = $params;
-        $func = $data['func'] ?? '';
+        $func = $data['function'] ?? '';
 
         return $this->match($func);
     }

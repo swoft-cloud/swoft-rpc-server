@@ -37,7 +37,7 @@ class RpcEventListener implements ReceiveInterface,ConnectInterface,CloseInterfa
      */
     public function onReceive(Server $server, int $fd, int $fromId, string $data)
     {
-        App::getBean('ServiceDispatcher')->doDispatcher($server, $fd, $fromId, $data);
+        App::getBean('ServiceDispatcher')->dispatch($server, $fd, $fromId, $data);
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Swoft\Rpc\Server\Validator;
 
 use Swoft\Bean\Annotation\Bean;
-use Swoft\Bean\Annotation\ValidatorFrom;
 use Swoft\Validator\AbstractValidator;
 
 /**
@@ -25,9 +24,6 @@ class ServiceValidator extends AbstractValidator
         $args = $this->getServiceArgs($serviceHandler, $serviceData);
 
         foreach ($validators ?? [] as $type => $validator) {
-            if ($type !== ValidatorFrom::SERVICE) {
-                continue;
-            }
             $this->validateArg($args, $validator);
         }
 

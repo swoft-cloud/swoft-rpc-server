@@ -3,7 +3,7 @@
 namespace Swoft\Rpc\Server\Bean\Annotation;
 
 /**
- * RPC Servie annotation
+ * Service annotation
  *
  * @Annotation
  * @Target("CLASS")
@@ -11,11 +11,9 @@ namespace Swoft\Rpc\Server\Bean\Annotation;
 class Service
 {
     /**
-     * service名称
-     *
      * @var string
      */
-    private $name = '';
+    private $version = "0";
 
     /**
      * Service constructor.
@@ -25,18 +23,18 @@ class Service
     public function __construct(array $values)
     {
         if (isset($values['value'])) {
-            $this->name = $values['value'];
+            $this->version = $values['value'];
         }
-        if (isset($values['name'])) {
-            $this->name = $values['name'];
+        if (isset($values['version'])) {
+            $this->version = $values['version'];
         }
     }
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getVersion(): string
     {
-        return $this->name;
+        return $this->version;
     }
 }

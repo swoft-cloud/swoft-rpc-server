@@ -3,7 +3,7 @@
 namespace Swoft\Rpc\Server;
 
 use Swoft\App;
-use Swoft\Core\DispatcherInterface;
+use Swoft\Contract\DispatcherInterface;
 use Swoft\Core\RequestHandler;
 use Swoft\Helper\ResponseHelper;
 use Swoft\Rpc\Server\Event\RpcServerEvent;

@@ -3,7 +3,6 @@
 namespace Swoft\Rpc\Server\Bean\Collector;
 
 use Swoft\Bean\CollectorInterface;
-use Swoft\Rpc\Server\Bean\Annotation\Mapping;
 use Swoft\Rpc\Server\Bean\Annotation\Service;
 
 /**
@@ -22,37 +21,26 @@ class ServiceCollector implements CollectorInterface
      * @param string $propertyName
      * @param string $methodName
      * @param null   $propertyValue
+     *
+     * @return void
      */
-    public static function collect(
-        string $className,
-        $objectAnnotation = null,
-        string $propertyName = '',
-        string $methodName = '',
-        $propertyValue = null
-    ) {
+    public static function collect(string $className, $objectAnnotation = null, string $propertyName = '', string $methodName = '', $propertyValue = null)
+    {
         // collect service
         if ($objectAnnotation instanceof Service) {
-            $serverName = $objectAnnotation->getName();
-            self::$serviceMapping[$className]['name'] = $serverName;
 
-            return;
-        }
+            $rc = new \ReflectionClass($className);
+            $interfaces = $rc->getInterfaceNames();
+            $methods = $rc->getMethods(\ReflectionMethod::IS_PUBLIC);
+            $version = $objectAnnotation->getVersion();
 
-        // collect method
-        if ($objectAnnotation instanceof Mapping) {
-            $mapped = $objectAnnotation->getName();
-            self::$serviceMapping[$className]['routes'][] = [
-                'mappedName' => $mapped,
-                'methodName' => $methodName,
-            ];
+            foreach ($interfaces as $interfaceClass){
+                foreach ($methods as $method){
+                    $methodName = $method->getName();
+                    self::$serviceMapping[$interfaceClass][$version][$methodName] = [$className, $methodName];
+                }
+            }
 
-            return;
-        }
-        if ($objectAnnotation === null && isset(self::$serviceMapping[$className])) {
-            self::$serviceMapping[$className]['routes'][] = [
-                'mappedName' => '',
-                'methodName' => $methodName,
-            ];
             return;
         }
     }

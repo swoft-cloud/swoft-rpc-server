@@ -38,7 +38,6 @@ class UserMiddleware implements MiddlewareInterface
         $middlewareCollector = $collector[$className]['middlewares']??[];
         $groupMiddlewares    = $middlewareCollector['group'] ?? [];
         $funcMiddlewares     = $middlewareCollector['actions'][$funcName]??[];
-
         $middlewares = array_merge($middlewares, $groupMiddlewares, $funcMiddlewares);
         if (!empty($middlewares) && $handler instanceof RequestHandler) {
             $handler->insertMiddlewares($middlewares);

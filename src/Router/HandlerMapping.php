@@ -3,20 +3,13 @@
 namespace Swoft\Rpc\Server\Router;
 
 use Swoft\Router\HandlerMappingInterface;
+use Swoft\Rpc\Server\Exception\RpcServerException;
 
 /**
  * Handler of service
  */
 class HandlerMapping implements HandlerMappingInterface
 {
-
-    /**
-     * Service suffix
-     *
-     * @var string
-     */
-    private $suffix = 'Service';
-
     /**
      * Service routes
      *
@@ -28,15 +21,14 @@ class HandlerMapping implements HandlerMappingInterface
      * Get handler from router
      *
      * @param array ...$params
+     *
      * @return array
      * @throws \InvalidArgumentException
      */
     public function getHandler(...$params): array
     {
-        list($data) = $params;
-        $func = $data['function'] ?? '';
-
-        return $this->match($func);
+        list($interfaceClass, $version, $method) = $params;
+        return $this->match($interfaceClass, $version, $method);
     }
 
     /**
@@ -46,12 +38,10 @@ class HandlerMapping implements HandlerMappingInterface
      */
     public function register(array $serviceMapping)
     {
-        foreach ($serviceMapping as $className => $mapping) {
-            $prefix = $mapping['name'];
-            $routes = $mapping['routes'];
-            $prefix = $this->getPrefix($this->suffix, $prefix, $className);
-
-            $this->registerRoute($className, $routes, $prefix);
+        foreach ($serviceMapping as $interfaceName => $versions) {
+            foreach ($versions as $version => $methods) {
+                $this->registerRoute($interfaceName, $version, $methods);
+            }
         }
     }
 
@@ -59,62 +49,57 @@ class HandlerMapping implements HandlerMappingInterface
      * Match route
      *
      * @param $func
+     *
      * @return array
      * @throws \InvalidArgumentException
      */
-    public function match($func): array
+
+    /**
+     * Match route
+     *
+     * @param string $interfaceClass
+     * @param string $version
+     * @param string $method
+     *
+     * @return array
+     * @throws RpcServerException
+     */
+    public function match(string $interfaceClass, string $version, string $method): array
     {
-        if (! isset($this->routes[$func])) {
-            throw new \InvalidArgumentException('the func of service is not exist，func=' . $func);
+        $serviceKey = $this->getServiceKey($interfaceClass, $version, $method);
+        if (!isset($this->routes[$serviceKey])) {
+            throw new RpcServerException(sprintf('The %s of %s %s is not exist! ', $method, $interfaceClass, $version));
         }
 
-        return $this->routes[$func];
+        return $this->routes[$serviceKey];
     }
 
     /**
      * Register one route
      *
-     * @param string $className
-     * @param array  $routes
-     * @param string $prefix
+     * @param string $interfaceName
+     * @param string $version
+     * @param array  $methods
      */
-    private function registerRoute(string $className, array $routes, string $prefix)
+    private function registerRoute(string $interfaceName, string $version, array $methods)
     {
-        foreach ($routes as $route) {
-            $mappedName = $route['mappedName'];
-            $methodName = $route['methodName'];
-            if (empty($mappedName)) {
-                $mappedName = $methodName;
-            }
-
-            $serviceKey = $prefix . '::' . $mappedName;
-            $this->routes[$serviceKey] = [$className, $methodName];
+        foreach ($methods as $method => $handler) {
+            $serviceKey                = $this->getServiceKey($interfaceName, $version, $method);
+            $this->routes[$serviceKey] = $handler;
         }
     }
 
     /**
-     * Get service from class name
+     * Get service key
      *
-     * @param string $suffix
-     * @param string $prefix
-     * @param string $className
+     * @param string $interfaceClass
+     * @param string $version
+     * @param string $method
+     *
      * @return string
      */
-    private function getPrefix(string $suffix, string $prefix, string $className): string
+    private function getServiceKey(string $interfaceClass, string $version, string $method)
     {
-        // The prefix of annotation is exist
-        if (! empty($prefix)) {
-            return $prefix;
-        }
-
-        // The prefix of annotation is empty
-        $reg = '/^.*\\\(\w+)' . $suffix . '$/';
-        $prefix = '';
-
-        if ($result = preg_match($reg, $className, $match)) {
-            $prefix = ucfirst($match[1]);
-        }
-
-        return $prefix;
+        return sprintf('%s_%s_%s', $interfaceClass, $version, $method);
     }
 }

@@ -39,9 +39,13 @@ class RouterMiddleware implements MiddlewareInterface
         // service data
         $data = $request->getAttribute(PackerMiddleware::ATTRIBUTE_DATA);
 
+        $method    = $data['method']??"";
+        $version   = $data['version']??"";
+        $interface = $data['interface']??"";
+
         /* @var \Swoft\Rpc\Server\Router\HandlerMapping $serviceRouter */
         $serviceRouter  = App::getBean('serviceRouter');
-        $serviceHandler = $serviceRouter->getHandler($data);
+        $serviceHandler = $serviceRouter->getHandler($interface, $version, $method);
 
         // deliver service data
         $request = $request->withAttribute(self::ATTRIBUTE, $serviceHandler);

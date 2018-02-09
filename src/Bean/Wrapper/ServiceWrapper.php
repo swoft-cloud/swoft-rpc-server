@@ -12,7 +12,6 @@ use Swoft\Bean\Annotation\Number;
 use Swoft\Bean\Annotation\Strings;
 use Swoft\Bean\Annotation\Value;
 use Swoft\Bean\Wrapper\AbstractWrapper;
-use Swoft\Rpc\Server\Bean\Annotation\Mapping;
 use Swoft\Rpc\Server\Bean\Annotation\Service;
 
 /**
@@ -52,7 +51,6 @@ class ServiceWrapper extends AbstractWrapper
         = [
             Middleware::class,
             Middlewares::class,
-            Mapping::class,
             Strings::class,
             Floats::class,
             Number::class,
@@ -93,6 +91,6 @@ class ServiceWrapper extends AbstractWrapper
      */
     public function isParseMethodAnnotations(array $annotations): bool
     {
-        return isset($annotations[Mapping::class]);
+        return true;
     }
 }

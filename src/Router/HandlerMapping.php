@@ -2,7 +2,7 @@
 
 namespace Swoft\Rpc\Server\Router;
 
-use Swoft\Router\HandlerMappingInterface;
+use Swoft\Http\Message\Router\HandlerMappingInterface;
 use Swoft\Rpc\Server\Exception\RpcServerException;
 
 /**

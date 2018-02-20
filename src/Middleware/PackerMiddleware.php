@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Bean\Annotation\Bean;
-use Swoft\Middleware\MiddlewareInterface;
+use Swoft\Http\Message\Middleware\MiddlewareInterface;
 use Swoft\Rpc\Server\Event\RpcServerEvent;
 use Swoft\Rpc\Server\Router\HandlerAdapter;
 

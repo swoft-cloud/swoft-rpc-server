@@ -7,8 +7,8 @@ use Swoft\App;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Helper\PhpHelper;
 use Swoft\Helper\ResponseHelper;
+use Swoft\Http\Message\Router\HandlerAdapterInterface;
 use Swoft\Rpc\Server\Middleware\PackerMiddleware;
-use Swoft\Router\HandlerAdapterInterface;
 use Swoft\Rpc\Server\Rpc\Response;
 
 /**

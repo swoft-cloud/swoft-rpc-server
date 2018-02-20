@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Bean\Collector\ValidatorCollector;
-use Swoft\Middleware\MiddlewareInterface;
+use Swoft\Http\Message\Middleware\MiddlewareInterface;
 use Swoft\Rpc\Server\Validator\ServiceValidator;
 use Swoft\Validator\ValidatorInterface;
 

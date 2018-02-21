@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Core\RequestHandler;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
-use Swoft\Bean\Collector\MiddlewareCollector;
+use Swoft\Http\Message\Bean\Collector\MiddlewareCollector;
 
 /**
  * the annotation middlewares of action

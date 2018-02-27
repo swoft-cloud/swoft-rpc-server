@@ -19,16 +19,11 @@ use Swoft\Bootstrap\SwooleEvent;
  * },
  *     type=SwooleEvent::TYPE_PORT
  * )
- * @uses      RpcEventListener
- * @version   2018年01月10日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class RpcEventListener implements ReceiveInterface,ConnectInterface,CloseInterface
 {
     /**
-     * RPC请求每次启动一个协程来处理
+     * RPC 请求每次启动一个协程来处理
      *
      * @param Server $server
      * @param int    $fd
@@ -37,7 +32,9 @@ class RpcEventListener implements ReceiveInterface,ConnectInterface,CloseInterfa
      */
     public function onReceive(Server $server, int $fd, int $fromId, string $data)
     {
-        App::getBean('ServiceDispatcher')->dispatch($server, $fd, $fromId, $data);
+        /** @var \Swoft\Rpc\Server\ServiceDispatcher $dispatcher */
+        $dispatcher = App::getBean('ServiceDispatcher');
+        $dispatcher->dispatch($server, $fd, $fromId, $data);
     }
 
     /**
@@ -50,7 +47,7 @@ class RpcEventListener implements ReceiveInterface,ConnectInterface,CloseInterfa
      */
     public function onConnect(Server $server, int $fd, int $from_id)
     {
-        var_dump("connnect------");
+        var_dump('connnect------');
     }
 
     /**
@@ -63,6 +60,6 @@ class RpcEventListener implements ReceiveInterface,ConnectInterface,CloseInterfa
      */
     public function onClose(Server $server, int $fd, int $reactorId)
     {
-        var_dump("close------");
+        var_dump('close------');
     }
 }

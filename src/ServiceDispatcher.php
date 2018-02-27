@@ -37,6 +37,8 @@ class ServiceDispatcher implements DispatcherInterface
 
     /**
      * @param array ...$params
+     * @throws \Swoft\Rpc\Exception\RpcException
+     * @throws \InvalidArgumentException
      */
     public function dispatch(...$params)
     {
@@ -62,9 +64,9 @@ class ServiceDispatcher implements DispatcherInterface
             $data = ResponseHelper::formatData('', $message, $t->getCode());
             $data = service_packer()->pack($data);
         } finally {
-            App::trigger(RpcServerEvent::AFTER_RECEIVE);
             $server->send($fd, $data);
         }
+        App::trigger(RpcServerEvent::AFTER_RECEIVE);
     }
 
     /**
@@ -110,7 +112,7 @@ class ServiceDispatcher implements DispatcherInterface
      * @param string         $data
      * @return Request
      */
-    private function getRequest(Server $server, int $fd, int $fromid, string $data)
+    private function getRequest(Server $server, int $fd, int $fromid, string $data): Request
     {
         $serviceRequest = new Request('get', '/');
 

@@ -5,6 +5,7 @@ namespace Swoft\Rpc\Server;
 use Swoft\App;
 use Swoft\Contract\DispatcherInterface;
 use Swoft\Core\RequestHandler;
+use Swoft\Event\AppEvent;
 use Swoft\Helper\ResponseHelper;
 use Swoft\Rpc\Server\Event\RpcServerEvent;
 use Swoft\Rpc\Server\Middleware\HandlerAdapterMiddleware;
@@ -64,6 +65,10 @@ class ServiceDispatcher implements DispatcherInterface
             $data = ResponseHelper::formatData('', $message, $t->getCode());
             $data = service_packer()->pack($data);
         } finally {
+
+            // Release system resources
+            App::trigger(AppEvent::RESOURCE_RELEASE);
+
             $server->send($fd, $data);
         }
         App::trigger(RpcServerEvent::AFTER_RECEIVE);

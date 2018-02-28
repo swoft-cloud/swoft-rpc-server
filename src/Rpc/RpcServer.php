@@ -32,7 +32,7 @@ class RpcServer extends AbstractServer
         $this->registerSwooleEvents($this->server, $swooleEvents);
 
         // before start
-        $this->beforeStart();
+        $this->beforeServerStart();
         $this->server->start();
     }
 

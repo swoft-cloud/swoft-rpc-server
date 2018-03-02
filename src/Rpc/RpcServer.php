@@ -27,6 +27,7 @@ class RpcServer extends AbstractServer
         $this->server->on(SwooleEvent::ON_START, [$this, 'onStart']);
         $this->server->on(SwooleEvent::ON_WORKER_START, [$this, 'onWorkerStart']);
         $this->server->on(SwooleEvent::ON_MANAGER_START, [$this, 'onManagerStart']);
+        $this->server->on(SwooleEvent::ON_PIPE_MESSAGE, [$this, 'onPipeMessage']);
 
         $swooleEvents = $this->getSwooleEvents();
         $this->registerSwooleEvents($this->server, $swooleEvents);

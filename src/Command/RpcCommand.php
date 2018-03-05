@@ -39,13 +39,13 @@ class RpcCommand
         $tcpHost = $tcpStatus['host'];
         $tcpPort = $tcpStatus['port'];
         $tcpType = $tcpStatus['type'];
-        $tcpModel = $tcpStatus['model'];
+        $tcpMode = $tcpStatus['mode'];
 
         // 信息面板
         $lines = [
             '                    Information Panel                     ',
             '**********************************************************',
-            "* tcp | Host: <note>$tcpHost</note>, port: <note>$tcpPort</note>, Model: <note>$tcpModel</note>, type: <note>$tcpType</note>",
+            "* tcp | Host: <note>$tcpHost</note>, port: <note>$tcpPort</note>, Model: <note>$tcpMode</note>, type: <note>$tcpType</note>",
             '**********************************************************',
         ];
         output()->writeln(implode("\n", $lines));

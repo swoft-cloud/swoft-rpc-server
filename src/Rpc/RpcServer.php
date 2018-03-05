@@ -18,7 +18,7 @@ class RpcServer extends AbstractServer
      */
     public function start()
     {
-        $this->server = new Server($this->tcpSetting['host'], $this->tcpSetting['port'], $this->tcpSetting['model'], $this->tcpSetting['type']);
+        $this->server = new Server($this->tcpSetting['host'], $this->tcpSetting['port'], $this->tcpSetting['mode'], $this->tcpSetting['type']);
 
         // Bind event callback
         $listenSetting = $this->getListenTcpSetting();

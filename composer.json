@@ -10,9 +10,9 @@
     "description": "microservice framework base on swoole",
     "license": "Apache-2.0",
     "require": {
-        "swoft/framework": "dev-master",
-        "swoft/console": "dev-master",
-        "swoft/http-message": "dev-master",
+        "swoft/framework": "^1.0",
+        "swoft/console": "^1.0",
+        "swoft/http-message": "^1.0",
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
@@ -30,18 +30,6 @@
         }
     },
     "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/swoft-cloud/swoft-console"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/swoft-cloud/swoft-http-message"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/swoft-cloud/framework"
-        },
         {
             "type": "composer",
             "url": "https://packagist.phpcomposer.com"

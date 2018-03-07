@@ -12,22 +12,19 @@ use Swoft\Validator\AbstractValidator;
 class ServiceValidator extends AbstractValidator
 {
     /**
-     * @param mixed $validators
      * @param array ...$params
-     * @return mixed
+     * @return void
      * @throws \ReflectionException
      * @throws \Swoft\Exception\ValidatorException
      */
-    public function validate($validators, ...$params)
+    public function validate(...$params)
     {
-        list($serviceHandler, $serviceData) = $params;
+        list($validators, $serviceHandler, $serviceData) = $params;
         $args = $this->getServiceArgs($serviceHandler, $serviceData);
 
         foreach ($validators ?? [] as $type => $validator) {
             $this->validateArg($args, $validator);
         }
-
-        return;
     }
 
 
@@ -44,7 +41,7 @@ class ServiceValidator extends AbstractValidator
             if (! isset($args[$name])) {
                 continue;
             }
-            $this->doValidation($args[$name], $info);
+            $this->doValidation($name, $args[$name], $info);
         }
     }
 

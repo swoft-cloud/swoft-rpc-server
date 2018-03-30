@@ -98,8 +98,17 @@ class HandlerMapping implements HandlerMappingInterface
      *
      * @return string
      */
-    private function getServiceKey(string $interfaceClass, string $version, string $method)
+    private function getServiceKey(string $interfaceClass, string $version, string $method): string
     {
-        return sprintf('%s_%s_%s', $interfaceClass, $version, $method);
+        return \sprintf('%s_%s_%s', $interfaceClass, $version, $method);
     }
+
+    /**
+     * @return array
+     */
+    public function getRoutes(): array
+    {
+        return $this->routes;
+    }
+
 }

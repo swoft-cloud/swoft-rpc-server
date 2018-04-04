@@ -126,4 +126,12 @@ class ServiceDispatcher implements DispatcherInterface
                               ->withAttribute(PackerMiddleware::ATTRIBUTE_FROMID, $fromid)
                               ->withAttribute(PackerMiddleware::ATTRIBUTE_DATA, $data);
     }
+    
+    /**
+     * @return array
+     */
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
+    }
 }

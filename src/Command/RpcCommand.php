@@ -14,12 +14,12 @@ class RpcCommand
     /**
      * start rpc server
      *
-     * @Usage
-     * rpc:{command} [arguments] [options]
+     * @Usage {fullCommand} [-d|--daemon]
      * @Options
-     * -d,--d start by daemonized process
+     *   -d, --daemon    Run server on the background
      * @Example
-     * php swoft.php rpc:start -d
+     *   {fullCommand}
+     *   {fullCommand} -d
      */
     public function start()
     {
@@ -28,7 +28,7 @@ class RpcCommand
         // 是否正在运行
         if ($rpcServer->isRunning()) {
             $serverStatus = $rpcServer->getServerSetting();
-            output()->writeln("<error>The server have been running!(PID: {$serverStatus['masterPid']})</error>", true, true);
+            \output()->writeln("<error>The server have been running!(PID: {$serverStatus['masterPid']})</error>", true, true);
         }
 
         // 选项参数解析
@@ -44,11 +44,11 @@ class RpcCommand
         // 信息面板
         $lines = [
             '                    Information Panel                     ',
-            '**********************************************************',
-            "* tcp | Host: <note>$tcpHost</note>, port: <note>$tcpPort</note>, Model: <note>$tcpMode</note>, type: <note>$tcpType</note>",
-            '**********************************************************',
+            '*************************************************************',
+            "* tcp | Host: <note>$tcpHost</note>, port: <note>$tcpPort</note>, mode: <note>$tcpMode</note>, type: <note>$tcpType</note>",
+            '*************************************************************',
         ];
-        output()->writeln(implode("\n", $lines));
+        \output()->writeln(implode("\n", $lines));
 
         // 启动
         $rpcServer->start();
@@ -58,9 +58,9 @@ class RpcCommand
      * reload worker process
      *
      * @Usage
-     * rpc:{command} [arguments] [options]
+     *   {fullCommand} [arguments] [options]
      * @Options
-     * -t only to reload task processes, default to reload worker and task
+     *   -t     Only to reload task processes, default to reload worker and task
      * @Example
      * php swoft.php rpc:reload
      */
@@ -85,10 +85,8 @@ class RpcCommand
     /**
      * stop rpc server
      *
-     * @Usage
-     * rpc:{command} [arguments] [options]
-     * @Example
-     * php swoft.php rpc:stop
+     * @Usage {fullCommand}
+     * @Example {fullCommand}
      */
     public function stop()
     {
@@ -96,7 +94,7 @@ class RpcCommand
 
         // 是否已启动
         if (! $rpcServer->isRunning()) {
-            output()->writeln('<error>The server is not running! cannot stop</error>', true, true);
+            \output()->writeln('<error>The server is not running! cannot stop</error>', true, true);
         }
 
         // pid文件
@@ -104,25 +102,27 @@ class RpcCommand
         $pidFile = $serverStatus['pfile'];
 
         @unlink($pidFile);
-        output()->writeln(sprintf('<info>Swoft %s is stopping ...</info>', input()->getFullScript()));
+        \output()->writeln(sprintf('<info>Swoft %s is stopping ...</info>', input()->getFullScript()));
 
         $result = $rpcServer->stop();
 
         // 停止失败
         if (! $result) {
-            output()->writeln(sprintf('<error>Swoft %s stop fail</error>', input()->getFullScript()));
+            \output()->writeln(sprintf('<error>Swoft %s stop fail</error>', input()->getFullScript()));
         }
 
-        output()->writeln(sprintf('<success>Swoft %s stop success</success>', input()->getFullScript()));
+        \output()->writeln(sprintf('<success>Swoft %s stop success</success>', input()->getFullScript()));
     }
 
     /**
      * restart rpc server
      *
-     * @Usage
-     * rpc:{command} [arguments] [options]
+     * @Usage {fullCommand}
+     * @Options
+     *   -d, --daemon    Run server on the background
      * @Example
-     * php swoft.php rpc:restart
+     *   {fullCommand}
+     *   {fullCommand} -d
      */
     public function restart()
     {
@@ -143,9 +143,10 @@ class RpcCommand
      */
     private function getRpcServer(): RpcServer
     {
-        $script = input()->getScript();
+        $script = \input()->getScript();
         $rpcServer = new RpcServer();
         $rpcServer->setScriptFile($script);
+        
         return $rpcServer;
     }
 
@@ -154,10 +155,7 @@ class RpcCommand
      */
     private function setStartArgs(RpcServer $rpcServer)
     {
-        $daemonize = input()->hasOpt('d');
-
-        // 设置后台启动
-        if ($daemonize) {
+        if (\input()->getSameOpt(['d', 'daemon'], false)) {
             $rpcServer->setDaemonize();
         }
     }

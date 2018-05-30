@@ -39,6 +39,7 @@ class ValidatorMiddleware implements MiddlewareInterface
 
         list($className, $validatorKey) = $serviceHandler;
         $collector = ValidatorCollector::getCollector();
+        var_dump($collector);
         if (isset($collector[$className][$validatorKey]['validator'])) {
             $validators = $collector[$className][$validatorKey]['validator'];
             $validator->validate($validators, $serviceHandler, $serviceData);

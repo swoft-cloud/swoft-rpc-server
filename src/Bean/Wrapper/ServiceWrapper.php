@@ -55,7 +55,16 @@ class ServiceWrapper extends AbstractWrapper
             Floats::class,
             Number::class,
             Integer::class,
-            Enum::class
+            Enum::class,
+            Email::class,
+            Regex::class,
+            Callback::class,
+            Alphanumeric::class,
+            Alphabetic::class,
+            Ip::class,
+            Date::class,
+            Url::class,
+            CreditCard::class
         ];
 
     /**
